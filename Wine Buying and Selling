@@ -1,0 +1,71 @@
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function Template for C++
+
+
+class Solution{
+  public:
+  long long int wineSelling(vector<int>& Arr, int N){
+      //Code here.
+      vector<pair<int,long long int>>buy,sell;
+      for(int i=0;i<N;i++){
+          if(Arr[i]<0){
+              sell.push_back({i,-Arr[i]});
+          }else{
+              buy.push_back({i,Arr[i]});
+          }
+      }
+      long long int ans=0;
+      int i=0,j=0;
+      int n=sell.size(),m=buy.size();
+      while(i<n && j<m){
+          if(sell[i].second>buy[j].second){
+              sell[i].second-=buy[j].second;
+              ans+=buy[j].second*abs(buy[j].first-sell[i].first);
+              buy[j].second=0;
+          }else if(sell[i].second<buy[j].second){
+              buy[j].second-=sell[i].second;
+              ans+=sell[i].second*abs(buy[j].first-sell[i].first);
+              sell[i].second=0;
+          }else if(sell[i].second==buy[j].second){
+              ans+=sell[i].second*abs(buy[j].first-sell[i].first);
+              sell[i].second=0;
+              buy[j].second=0;
+          }
+          if(sell[i].second==0)i++;
+          if(buy[j].second==0)j++;
+      }
+      return ans;
+  }
+};
+ 
+
+
+
+//{ Driver Code Starts.
+
+
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        
+        vector<int> arr(n);
+        for(int i=0;i<n;i++){
+            cin>>arr[i];
+        }
+        Solution ob;
+        long long int ans = ob.wineSelling(arr,n);
+        
+        cout<<ans<<endl;
+    }
+}
+// } Driver Code Ends
