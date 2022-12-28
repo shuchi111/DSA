@@ -1,0 +1,89 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+
+vector<int> asteroidCollision(int n, vector<int> &a) {
+        // code here
+        stack<int> s;
+        vector<int> v;
+        int t,d;
+        for(int i=0;i<n;++i)
+        {
+            if(s.empty())
+            {
+                if(a[i]<0)v.push_back(a[i]);
+                else
+                {
+                    s.push(a[i]);
+                }
+            }
+            else
+            {
+                if(a[i]>0)
+                {
+                    s.push(a[i]);
+                    continue;
+                }
+                t=s.top();
+                while(1)
+                {
+                    d=0;
+                    if(s.empty())break;
+                    t=s.top();
+                    if(t==(int)abs(a[i]))
+                    {
+                        s.pop();
+                        d=1;
+                        break;
+                    }
+                    if(t>abs(a[i]))
+                    {
+                        break;
+                    }
+                    s.pop();
+                }
+                if(s.empty()&&d==0)v.push_back(a[i]);
+            }
+            
+        }
+        //cout<<" v os "<<v.back()<<endl;
+        stack<int> f;
+        while(!s.empty())
+        {
+            f.push(s.top());
+            s.pop();
+        }
+        while(!f.empty())
+        {
+            v.push_back(f.top());
+            f.pop();
+        }
+        return v;
+    }
+ };
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        cin >> N;
+
+        vector<int> asteroids(N);
+        for (int i = 0; i < N; i++) cin >> asteroids[i];
+
+        Solution obj;
+        vector<int> ans = obj.asteroidCollision(N, asteroids);
+        for (auto &it : ans) cout << it << ' ';
+        cout << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
