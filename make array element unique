@@ -1,0 +1,116 @@
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution {
+  public:
+    long long int minIncrements(vector<int> arr, int N) {
+        // Code here
+           long long int ans=0;
+
+        unordered_map<long long int,long long int>freq;
+
+                unordered_map<long long int,long long int>mark;
+
+                for(auto i :arr)
+
+                {
+
+                    freq[i]++;
+
+                    if(freq[i]>1) 
+
+                    {  
+
+                        mark[i]=freq[i];
+
+                    }
+
+                  
+
+                }
+
+                if(mark.size()==0) return ans;
+
+                for(auto i :mark)
+
+                {
+
+                      int x = i.second;
+
+                      int key = i.first;
+
+                      x--;
+
+                      key++;
+
+                      ans++;
+
+                      while(x)
+
+                      {
+
+                          bool flag=true;
+
+                          while(flag)
+
+                         {
+
+                             if(freq.find(key)!=freq.end())
+
+                          {
+
+                              ans++;
+
+                              key++;
+
+                          }
+
+                          else 
+
+                          {
+
+                              freq[key]++;
+
+                              key = i .first;
+
+                              flag=false;
+
+                              break;
+
+                          }
+
+                      }
+
+                          x--;
+
+                      }
+
+                 }
+
+                 return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        cin >> N;
+        vector<int> arr(N);
+        for (int i = 0; i < N; i++) {
+            cin >> arr[i];
+        }
+        Solution obj;
+        cout << obj.minIncrements(arr, N) << endl;
+    }
+}
+// } Driver Code Ends
