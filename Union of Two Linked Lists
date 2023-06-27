@@ -1,0 +1,142 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node
+{
+	int data;
+	struct Node* next;
+	
+	Node(int x){
+	    data = x;
+	    next = NULL;
+	}
+	
+};
+
+
+// } Driver Code Ends
+/*
+// structure of the node is as follows
+
+struct Node
+{
+	int data;
+	struct Node* next;
+	
+	Node(int x){
+	    data = x;
+	    next = NULL;
+	}
+	
+};
+
+*/
+class Solution
+{
+    public:
+    struct Node* makeUnion(struct Node* head1, struct Node* head2)
+    {
+        // code here
+      set<int> s;
+        
+        while(head1 != NULL) {
+            s.insert(head1->data);
+            head1 = head1->next;
+        }
+        while(head2 != NULL) {
+            s.insert(head2->data);
+            head2 = head2->next;
+        }
+        
+        Node* ans = new Node(0);
+        Node* head = ans;
+        for(auto i: s) {
+            ans->data = i;
+            if(i != *prev(s.end())) {        //If it is last element, Do NOT create new node.
+                ans->next = new Node(0);
+                ans = ans->next;
+            }
+        }
+        
+        return head;
+    }
+};
+
+
+//{ Driver Code Starts.
+
+struct Node* buildList(int size)
+{
+    int val;
+    cin>> val;
+    
+    Node* head = new Node(val);
+    Node* tail = head;
+    
+    for(int i=0; i<size-1; i++)
+    {
+        cin>> val;
+        tail->next = new Node(val);
+        tail = tail->next;
+    }
+    
+    return head;
+}
+
+void printList(Node* n)
+{
+    while(n)
+    {
+        cout<< n->data << " ";
+        n = n->next;
+    }
+    cout<< endl;
+}
+
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, m;
+        
+        cin>>n;
+        Node* first = buildList(n);
+        
+        cin>>m;
+        Node* second = buildList(m);
+        Solution obj;
+        Node* head = obj.makeUnion(first,second);
+        printList(head);
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+
+
+EXPLANATION:
+
+The given code snippet seems to be merging two linked lists head1 and head2 and returning the merged list without any duplicates.
+Here's a breakdown of the code:
+
+💡 set<int> s;: A set is declared to store unique elements from the linked lists. Since a set only allows unique elements, it automatically removes any duplicates.
+
+💡 The first while loop iterates through head1 and inserts each element into the set s using s.insert(head1->data).
+
+💡 Similarly, the second while loop iterates through head2 and inserts each element into the set s.
+
+💡 Node* ans = new Node(0); and Node* head = ans;: Two pointers ans and head are created and initialized with a new node having data 0. head will store the starting point of the merged list, and ans will be used to traverse and construct the merged list.
+
+💡 The for loop iterates over the elements in the set s using the range-based loop for(auto i: s). Each element is accessed as i.
+
+💡 Inside the loop, the data of the current node ans is set to the current element i using ans->data = i.
+
+💡 The condition if(i != *prev(s.end())) checks if the current element i is not the last element in the set. prev(s.end()) gives an iterator to the last element in the set. This condition ensures that a new node is not created for the last element, as there won't be any subsequent elements.
+
+💡 If the condition is true, a new node is created using ans->next = new Node(0);, and ans is moved to the next node using ans = ans->next.
+
+💡 Finally, the merged list is returned using return head;, which is the starting point of the merged list.
