@@ -1,0 +1,23 @@
+
+#Using hashmap
+class Solution:
+    # @param A : tuple of integers
+    # @return an integer
+    def repeatedNumber(self, A):
+        HashIndex = [0]*len(A)
+        for i in A:
+            if HashIndex[i]==0:
+                HashIndex[i]=1
+            elif HashIndex[i]==1:
+                    return i
+        
+        
+        #Using set concept
+        """seen = set()
+        for  n in A:
+            if n not in seen:
+                seen.add(n)
+            else:
+                return n
+        return -1  
+        """          
